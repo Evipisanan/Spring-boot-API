@@ -19,4 +19,23 @@ public class UserService {
         LOGGER.info("it is getAll method in UserService");
         return userRepository.findAll();
     }
+    public UserModel save(UserModel userModel){
+        userRepository.save(userModel);
+        return userModel;
+    }
+    public List<UserModel> deleteAll(){
+        List<UserModel> userModel;
+        userModel = userRepository.findAll();
+        userRepository.deleteAll();
+        return userModel;
+    }
+    public UserModel deleteById(int id){
+        UserModel userModel;
+        userModel = userRepository.findFirstById(id);
+        userRepository.deleteById(id);
+        return userModel;
+    }
+    public UserModel findFirstById(int id){
+        return userRepository.findFirstById(id);
+    }
 }

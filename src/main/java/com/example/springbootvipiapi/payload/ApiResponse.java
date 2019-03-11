@@ -1,40 +1,43 @@
 package com.example.springbootvipiapi.payload;
 
+import com.example.springbootvipiapi.exceptions.AGStatus;
+
 public class ApiResponse<T> {
-    private Boolean success;
-    private  String message;
+    private String statusCode;
+    private  String statusDescription;
     private T content;
 
     public ApiResponse() {
+        this.statusCode = AGStatus.SUCCESS.getStatusCode();
+        this.statusDescription = AGStatus.SUCCESS.getStatusDescription();
     }
 
     public ApiResponse(T content) {
-        this.success = true;
-        this.message = "show some message";
+        this.statusCode = AGStatus.SUCCESS.getStatusCode();
+        this.statusDescription = AGStatus.SUCCESS.getStatusDescription();
         this.content = content;
     }
 
-    public ApiResponse(Boolean success, String message, T content) {
-        this.success = success;
-        this.message = message;
+    public ApiResponse(String statusCode, String statusDescription, T content) {
+        this.statusCode = AGStatus.SUCCESS.getStatusCode();
+        this.statusDescription = AGStatus.SUCCESS.getStatusDescription();
         this.content = content;
     }
 
-    public ApiResponse(Boolean success , String message) {
-    this.message= message;
-    this.success = success;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public Boolean getSuccess() {
-        return success;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
+    public String getStatusDescription() {
+        return statusDescription;
     }
 
-    public String getMessage() {
-        return message;
+    public void setStatusDescription(String statusDescription) {
+        this.statusDescription = statusDescription;
     }
 
     public T getContent() {
@@ -45,15 +48,11 @@ public class ApiResponse<T> {
         this.content = content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     @Override
     public String toString() {
         return "ApiResponse{" +
-                "success=" + success +
-                ", message='" + message + '\'' +
+                "statusCode='" + statusCode + '\'' +
+                ", statusDescription='" + statusDescription + '\'' +
                 ", content=" + content +
                 '}';
     }
