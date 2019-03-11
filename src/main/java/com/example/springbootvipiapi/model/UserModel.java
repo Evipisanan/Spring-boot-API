@@ -83,4 +83,5 @@ public class UserModel {
     public void setPno(String pno) {
         this.pno = pno;
     }
+
 }
