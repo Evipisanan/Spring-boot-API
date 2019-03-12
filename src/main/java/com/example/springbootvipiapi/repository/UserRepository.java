@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
    UserModel deleteByNameAndAddress(String name , String address);
 
     UserModel findFirstById(int id);
+    UserModel deleteById(int id);
+
 }

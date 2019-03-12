@@ -4,6 +4,8 @@ import com.example.springbootvipiapi.model.UserModel;
 import com.example.springbootvipiapi.payload.ApiResponse;
 import com.example.springbootvipiapi.repository.UserRepository;
 import com.example.springbootvipiapi.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-//    @Autowired
-//    UserRepository userRepository;
+    private static final Logger LOGGER= LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     UserService userService;
 
@@ -36,36 +40,32 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/")
+    @DeleteMapping("/delete-all")
     private ApiResponse deleteAll() {
-//        userRepository.deleteAll();
+        LOGGER.info("Delete all method");
         return new ApiResponse(userService.deleteAll());
     }
 
     @DeleteMapping("/{id}")
-    private ApiResponse deletebyid(@PathVariable int id) {
-//        userRepository.deleteById(id);
+    private ApiResponse deleteById(@PathVariable(value = "id") int id) {
+        LOGGER.info("Delete by id method");
         return new ApiResponse(userService.deleteById(id));
     }
 
     //update
     @PutMapping("/{id}")
-    private ApiResponse update(@PathVariable int id, @RequestBody UserModel updateduser) {
-//        UserModel user = new UserModel();
-//        user = userRepository.findFirstById(id); //if we don't use this insert as a new set of user data
-//
-//        user.setName(updateduser.getName());
-//        user.setAddress(updateduser.getName());
-//        user.setPno(updateduser.getPno());
-//        userRepository.save(user);
-        UserModel userModel = new UserModel();
-        userModel= userService.findFirstById(id);
+    private ApiResponse update(@PathVariable(value = "id") int id, @RequestBody UserModel updateduser) {
+        UserModel user = new UserModel();
+        user= userService.findFirstById(id);
 
-        userModel.setName(updateduser.getName());
-        userModel.setAddress(updateduser.getAddress());
+        user.setName(updateduser.getName());
+        user.setAddress(updateduser.getAddress());
+        user.setCommentsModel(updateduser.getCommentsModel());
+        user.setPno(updateduser.getPno());
 
-//        BeanUtils.copyProperties(userModel ,updateduser);
-        return new ApiResponse(userService.save(userModel));
+        LOGGER.info("update method in Controller.....");
+
+        return new ApiResponse(userService.save(user));
     }
 
 }
